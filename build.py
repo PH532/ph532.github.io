@@ -1,10 +1,11 @@
 from pybtex.database.input import bibtex
 
+
 def get_personal_data():
-    name = ["Chien-Wen", "Sun (Web Building)"]
+    name = ["User-name", "Sun (Web Building)"]
     email = "sshouhua@gmail.com"
     github = "sshouhua"
-    scholar = "pp0bGY4AAAAJ"
+    # scholar = "pp0bGY4AAAAJ"
 
     bio_text = f"""
                 <p>
@@ -18,8 +19,7 @@ def get_personal_data():
                     <a href="https://sshouhua.github.io/assets/pdf/cwsun_cv.pdf" target="_blank" style="margin-right: 15px"><i class="fa fa-address-card fa-lg"></i> CV</a>
                     <a href="mailto:{email}" style="margin-right: 15px"><i class="far fa-envelope-open fa-lg"></i> Mail</a>
                     <a href="https://github.com/{github}" target="_blank" style="margin-right: 15px"><i class="fab fa-github fa-lg"></i> GitHub</a>
-                    <a href="https://scholar.google.com/citations?user={scholar}&hl=en" target="_blank" style="margin-right: 15px"><i class="fa-solid fa-graduation-cap"></i> Scholar</a>
-
+                    
                 </p>
     """
     footer = """
@@ -32,16 +32,23 @@ def get_personal_data():
     """
     return name, bio_text, footer
 
+
 def get_author_dict():
     return {
-        'Chih-Wei Tseng': 'https://scholar.google.com/citations?user=ybjfgNEAAAAJ&hl=zh-TW',
-        'Bing-Fei Wu': 'https://scholar.google.com/citations?user=7-23WmIAAAAJ&hl=en',
-        'Yu-Chen Lin': 'https://scholar.google.com/citations?user=tI26CY8AAAAJ&hl=en',
-        }
+        "Chih-Wei Tseng": "https://scholar.google.com/citations?user=ybjfgNEAAAAJ&hl=zh-TW",
+        "Bing-Fei Wu": "https://scholar.google.com/citations?user=7-23WmIAAAAJ&hl=en",
+        "Yu-Chen Lin": "https://scholar.google.com/citations?user=tI26CY8AAAAJ&hl=en",
+    }
 
 
-def generate_person_html(persons, connection=", ", make_bold=True, make_bold_name='Kashyap Chitta', 
-                         add_links=True, equal_contribution=None):
+def generate_person_html(
+    persons,
+    connection=", ",
+    make_bold=True,
+    make_bold_name="Kashyap Chitta",
+    add_links=True,
+    equal_contribution=None,
+):
     links = get_author_dict() if add_links else {}
     s = ""
 
@@ -50,12 +57,14 @@ def generate_person_html(persons, connection=", ", make_bold=True, make_bold_nam
         equal_contributors = equal_contribution
     for idx, p in enumerate(persons):
         string_part_i = ""
-        for name_part_i in p.get_part('first') + p.get_part('last'): 
+        for name_part_i in p.get_part("first") + p.get_part("last"):
             if string_part_i != "":
                 string_part_i += " "
             string_part_i += name_part_i
         if string_part_i in links.keys():
-            string_part_i = f'<a href="{links[string_part_i]}" target="_blank">{string_part_i}</a>'
+            string_part_i = (
+                f'<a href="{links[string_part_i]}" target="_blank">{string_part_i}</a>'
+            )
         if make_bold and string_part_i == make_bold_name:
             string_part_i = f'<span style="font-weight: bold";>{make_bold_name}</span>'
         if idx < equal_contributors:
@@ -65,8 +74,9 @@ def generate_person_html(persons, connection=", ", make_bold=True, make_bold_nam
         s += string_part_i
     return s
 
+
 def get_paper_entry(entry_key, entry):
-    if 'highlight' in entry.fields.keys():
+    if "highlight" in entry.fields.keys():
         s = """<div style="background-color: #ffffd0; margin-bottom: 3em;"> <div class="row"><div class="col-sm-3">"""
     else:
         s = """<div style="margin-bottom: 3em;"> <div class="row"><div class="col-sm-3">"""
@@ -74,37 +84,52 @@ def get_paper_entry(entry_key, entry):
     s += f"""<img src="{entry.fields['img']}" class="img-fluid img-thumbnail" alt="Project image">"""
     s += """</div><div class="col-sm-9">"""
 
-    if 'award' in entry.fields.keys():
+    if "award" in entry.fields.keys():
         s += f"""<a href="{entry.fields['html']}" target="_blank">{entry.fields['title']}</a> <span style="color: red;">({entry.fields['award']})</span><br>"""
     else:
         s += f"""<a href="{entry.fields['html']}" target="_blank">{entry.fields['title']}</a> <br>"""
 
-    if 'equal_contribution' in entry.fields.keys():
+    if "equal_contribution" in entry.fields.keys():
         s += f"""{generate_person_html(entry.persons['author'], equal_contribution=int(entry.fields['equal_contribution']))} <br>"""
-    else: 
+    else:
         s += f"""{generate_person_html(entry.persons['author'])} <br>"""
-    
+
     s += f"""<span style="font-style: italic;">{entry.fields['booktitle']}</span>, {entry.fields['year']} <br>"""
 
-    artefacts = {'html': 'Abs', 'pdf': 'Paper', 'supp': 'Supplementary', 'video': 'Video', 'poster': 'Poster', 'code': 'Code'}
+    artefacts = {
+        "html": "Abs",
+        "pdf": "Paper",
+        "supp": "Supplementary",
+        "video": "Video",
+        "poster": "Poster",
+        "code": "Code",
+    }
     i = 0
-    for (k, v) in artefacts.items():
+    for k, v in artefacts.items():
         if k in entry.fields.keys():
             if i > 0:
-                s += ' / '
+                s += " / "
             s += f"""<a href="{entry.fields[k]}" target="_blank">{v}</a>"""
             i += 1
         else:
-            print(f'[{entry_key}] Warning: Field {k} missing!')
-    
+            print(f"[{entry_key}] Warning: Field {k} missing!")
+
     cite = "<pre><code>@" + entry.type + "{" + f"{entry_key}, \n"
-    cite += "\tauthor = {" + f"{generate_person_html(entry.persons['author'], make_bold=False, add_links=False, connection=' and ')}" + "}, \n"
-    for entr in ['title', 'booktitle', 'year']:
+    cite += (
+        "\tauthor = {"
+        + f"{generate_person_html(entry.persons['author'], make_bold=False, add_links=False, connection=' and ')}"
+        + "}, \n"
+    )
+    for entr in ["title", "booktitle", "year"]:
         cite += f"\t{entr} = " + "{" + f"{entry.fields[entr]}" + "}, \n"
     cite += """}</pre></code>"""
-    s += " /" + f"""<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{entry_key}" aria-expanded="false" aria-controls="collapseExample" style="margin-left: -6px; margin-top: -2px;">Bibtex</button><div class="collapse" id="collapse{entry_key}"><div class="card card-body">{cite}</div></div>"""
+    s += (
+        " /"
+        + f"""<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{entry_key}" aria-expanded="false" aria-controls="collapseExample" style="margin-left: -6px; margin-top: -2px;">Bibtex</button><div class="collapse" id="collapse{entry_key}"><div class="card card-body">{cite}</div></div>"""
+    )
     s += """ </div> </div> </div>"""
     return s
+
 
 def get_talk_entry(entry_key, entry):
     s = """<div style="margin-bottom: 3em;"> <div class="row"><div class="col-sm-3">"""
@@ -113,36 +138,39 @@ def get_talk_entry(entry_key, entry):
     s += f"""{entry.fields['title']}<br>"""
     s += f"""<span style="font-style: italic;">{entry.fields['booktitle']}</span>, {entry.fields['year']} <br>"""
 
-    artefacts = {'slides': 'Slides', 'video': 'Recording'}
+    artefacts = {"slides": "Slides", "video": "Recording"}
     i = 0
-    for (k, v) in artefacts.items():
+    for k, v in artefacts.items():
         if k in entry.fields.keys():
             if i > 0:
-                s += ' / '
+                s += " / "
             s += f"""<a href="{entry.fields[k]}" target="_blank">{v}</a>"""
             i += 1
         else:
-            print(f'[{entry_key}] Warning: Field {k} missing!')
+            print(f"[{entry_key}] Warning: Field {k} missing!")
     s += """ </div> </div> </div>"""
     return s
 
+
 def get_publications_html():
     parser = bibtex.Parser()
-    bib_data = parser.parse_file('publication_list.bib')
+    bib_data = parser.parse_file("publication_list.bib")
     keys = bib_data.entries.keys()
     s = ""
     for k in keys:
-        s+= get_paper_entry(k, bib_data.entries[k])
+        s += get_paper_entry(k, bib_data.entries[k])
     return s
+
 
 def get_talks_html():
     parser = bibtex.Parser()
-    bib_data = parser.parse_file('talk_list.bib')
+    bib_data = parser.parse_file("talk_list.bib")
     keys = bib_data.entries.keys()
     s = ""
     for k in keys:
-        s+= get_talk_entry(k, bib_data.entries[k])
+        s += get_talk_entry(k, bib_data.entries[k])
     return s
+
 
 def get_index_html():
     pub = get_publications_html()
@@ -177,7 +205,7 @@ def get_index_html():
                 {bio_text}
             </div>
             <div class="col-md-4" style="">
-                <img src="assets/img/profile.png" class="img-thumbnail" alt="Profile picture">
+                <img src="assets/img/photo.jpg" class="img-thumbnail" alt="Profile picture">
             </div>
         </div>
         <div class="row" style="margin-top: 1em;">
@@ -217,11 +245,12 @@ def get_index_html():
     return s
 
 
-def write_index_html(filename='index.html'):
+def write_index_html(filename="index.html"):
     s = get_index_html()
-    with open(filename, 'w', encoding='utf-8') as f:
+    with open(filename, "w", encoding="utf-8") as f:
         f.write(s)
-    print(f'Written index content to {filename}.')
+    print(f"Written index content to {filename}.")
 
-if __name__ == '__main__':
-    write_index_html('index.html')
+
+if __name__ == "__main__":
+    write_index_html("index.html")
