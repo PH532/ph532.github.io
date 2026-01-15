@@ -2,9 +2,9 @@ from pybtex.database.input import bibtex
 
 
 def get_personal_data():
-    name = ["User-name", "Sun (Web Building)"]
-    email = "sshouhua@gmail.com"
-    github = "sshouhua"
+    name = ["Pei-Hsun", "Wu (Web Building)"]
+    email = "wu2001.en13@nycu.edu.tw"
+    github = "ph532"
     # scholar = "pp0bGY4AAAAJ"
 
     bio_text = f"""
