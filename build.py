@@ -10,7 +10,7 @@ def get_personal_data():
     bio_text = (
         bio_text
     ) = f"""
-        <p>
+        <p style="font-size:16px;">
             I am a master's student at the
             <a href="https://cssp.lab.nycu.edu.tw/" target="_blank">
             Chaotic Systems and Signal Processing Laboratory (CSSP Lab.)
