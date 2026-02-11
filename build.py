@@ -7,25 +7,48 @@ def get_personal_data():
     github = "ph532"
     # scholar = "pp0bGY4AAAAJ"
 
-    bio_text = f"""
-                <p>
-                    I am a Ph.D. student at the <a href="http://140.113.150.201/" target="_blank">Chaotic Systems and Signal Processing Laboratory (CSSP Lab.)</a> at National Yang Ming Chiao Tung University (NYCU), Taiwan. My research focuses on fuzzy systems, autonomous driving, and generative AI. Representative papers are <span style="background-color:#ffffd0">highlighted</span> below.
-                </p>
-                <p>
-                    <span style="font-weight: bold;">Bio:</span>
-                    Chien-Wen received the M.S. degree in Electronic Engineering from <a href="https://fcuece.fcu.edu.tw/" target="_blank">Feng Chia University (FCU)</a>, Taichung, Taiwan, in 2023. He is currently a Ph.D. student at the Institute of Electrical and Control Engineering, <a href="https://cn.nycu.edu.tw/index.php?locale=en" target="_blank">National Yang Ming Chiao Tung University (NYCU)</a>, where he is advised by <a href="https://cn.nycu.edu.tw/teachers.php?pa=getItem&teacher_id=286&locale=tw" target="_blank">Prof. Wu</a>. He is co-advised by <a href="https://auto.fcu.edu.tw/en/teachers-detail/?id=T02182&unit_id=CE12" target="_blank">Prof. Lin</a> of the Department of Automatic Control Engineering, FCU. His current research interests include fuzzy systems, adaptive and robust control, cognitive architectures, autonomous driving, trajectory planning, and generative AI.
-                </p>
-                <p>
-                    <a href="https://sshouhua.github.io/assets/pdf/cwsun_cv.pdf" target="_blank" style="margin-right: 15px"><i class="fa fa-address-card fa-lg"></i> CV</a>
-                    <a href="mailto:{email}" style="margin-right: 15px"><i class="far fa-envelope-open fa-lg"></i> Mail</a>
-                    <a href="https://github.com/{github}" target="_blank" style="margin-right: 15px"><i class="fab fa-github fa-lg"></i> GitHub</a>
-                    
-                </p>
-    """
+    bio_text = (
+        bio_text
+    ) = f"""
+        <p>
+            I am a master's student at the
+            <a href="https://cssp.lab.nycu.edu.tw/" target="_blank">
+            Chaotic Systems and Signal Processing Laboratory (CSSP Lab.)
+            </a>
+            at National Yang Ming Chiao Tung University (NYCU), Taiwan.
+            My research focuses on autonomous driving and generative AI.
+        </p>
+
+        <p>
+            <span style="font-weight: bold;">Bio:</span>
+            Pei-Hsun received the B.S. degree from the Department of Electrophysics,
+            National Yang Ming Chiao Tung University (NYCU), Taiwan, in 2024.
+            She is currently pursuing a master's degree in the
+            Graduate Degree Program of Robotics,
+            National Yang Ming Chiao Tung University (NYCU),
+            under the supervision of Prof. Wu.
+            His research interests include fuzzy systems, adaptive and robust control,
+            cognitive architectures, autonomous driving, trajectory planning,
+            and generative AI.
+        </p>
+
+        <p>
+            <a href="https://sshouhua.github.io/assets/pdf/cwsun_cv.pdf" target="_blank" style="margin-right: 15px">
+                <i class="fa fa-address-card fa-lg"></i> CV
+            </a>
+            <a href="mailto:{email}" style="margin-right: 15px">
+                <i class="far fa-envelope-open fa-lg"></i> Mail
+            </a>
+            <a href="https://github.com/{github}" target="_blank" style="margin-right: 15px">
+                <i class="fab fa-github fa-lg"></i> GitHub
+            </a>
+        </p>
+        """
+
     footer = """
             <div class="col-sm-12" style="">
                 <p>
-                    &copy; Copyright 2025 Chien-Wen Sun. 
+                    &copy; Copyright 2026 Pei-Hsun Wu. 
                     Powered by <a href="https://github.com/m-niemeyer/m-niemeyer.github.io" target="_blank">m-niemeyer</a>. 
                     Design inspired by <a href="https://kashyap7x.github.io/" target="_blank">Kashyap Chitta</a>.                </p>
             </div>
@@ -35,9 +58,9 @@ def get_personal_data():
 
 def get_author_dict():
     return {
-        "Chih-Wei Tseng": "https://scholar.google.com/citations?user=ybjfgNEAAAAJ&hl=zh-TW",
+        # "Chih-Wei Tseng": "https://scholar.google.com/citations?user=ybjfgNEAAAAJ&hl=zh-TW",
         "Bing-Fei Wu": "https://scholar.google.com/citations?user=7-23WmIAAAAJ&hl=en",
-        "Yu-Chen Lin": "https://scholar.google.com/citations?user=tI26CY8AAAAJ&hl=en",
+        # "Yu-Chen Lin": "https://scholar.google.com/citations?user=tI26CY8AAAAJ&hl=en",
     }
 
 
@@ -154,12 +177,12 @@ def get_talk_entry(entry_key, entry):
 
 def get_publications_html():
     parser = bibtex.Parser()
-    bib_data = parser.parse_file("publication_list.bib")
-    keys = bib_data.entries.keys()
-    s = ""
-    for k in keys:
-        s += get_paper_entry(k, bib_data.entries[k])
-    return s
+    # # bib_data = parser.parse_file("publication_list.bib")
+    # keys = bib_data.entries.keys()
+    # s = ""
+    # for k in keys:
+    #     s += get_paper_entry(k, bib_data.entries[k])
+    # return s
 
 
 def get_talks_html():
