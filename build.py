@@ -187,12 +187,12 @@ def get_publications_html():
 
 def get_talks_html():
     parser = bibtex.Parser()
-    bib_data = parser.parse_file("talk_list.bib")
-    keys = bib_data.entries.keys()
-    s = ""
-    for k in keys:
-        s += get_talk_entry(k, bib_data.entries[k])
-    return s
+    # bib_data = parser.parse_file("talk_list.bib")
+    # keys = bib_data.entries.keys()
+    # s = ""
+    # for k in keys:
+    #     s += get_talk_entry(k, bib_data.entries[k])
+    # return s
 
 
 def get_index_html():
